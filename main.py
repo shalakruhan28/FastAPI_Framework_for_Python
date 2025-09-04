@@ -22,3 +22,19 @@ def show(id:int):
     # logic to get the comments of the blog with id = id 
 def comments(id:int ):
     return {'data':{'1','2'}}
+
+
+#experimenting with query parameters & sorting 
+@app.get("/blog")
+
+# define the query parameters with default values
+def Blog_page(limit=10, published:bool=True, sort: str=None):
+ # logic to get the blogs from the db
+    if published:
+        return  {'data':f'{limit} published blogs from the db'}
+    else:
+        return  {'data':f'{limit} blogs from the db'}
+    
+
+
+   

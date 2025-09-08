@@ -1,7 +1,7 @@
 
-from fastapi import FastAPI
+from fastapi import FastAPI # type: ignore
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel # type: ignore
 
 app = FastAPI()
 

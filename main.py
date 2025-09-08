@@ -37,14 +37,16 @@ def Blog_page(limit=10, published:bool=True, sort: str=None):
     else:
         return  {'data':f'{limit} blogs from the db'}
 
-
+# request body
+# to create a blog we need title, body, published or not
 class Blog (BaseModel):
     title:str
     body:str
     published: Optional [bool]
     
-
+# create a blog
+# the data will be sent in json format
 @app.post("/blog")
 def create_blog(blog:Blog):
     return {'data':f'blog is created with title as {blog.title}' }
-   
+    

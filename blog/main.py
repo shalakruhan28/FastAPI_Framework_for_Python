@@ -24,4 +24,10 @@ def create_blog(request: schemas.Blog, db:Session = Depends(get_db)): # type: ig
     db.refresh(new_blog)
     return new_blog
     
+    
+@app.get("/blog")
+def get_blogs(db: Session = Depends(get_db)):
+    blogs = db.query(model.Blog).all()
+    return blogs 
+           
 

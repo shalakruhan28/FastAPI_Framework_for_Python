@@ -1,4 +1,4 @@
-from fastapi import FastAPI , Depends  # type: ignore
+from fastapi import FastAPI , Depends , status, Response ,HTTPException # type: ignore
 from . import schemas    # type: ignore
 from . import model # type: ignore 
 from .database import engine , Base , SessionLocal # type: ignore
@@ -30,7 +30,9 @@ def get_blogs(db: Session = Depends(get_db)):
     blogs = db.query(model.Blog).all()
     return blogs 
            
-@app.get("/blog/{id}")
-def get_blog(id: int, db: Session = Depends(get_db)):
+@app.get("/blog/{id}",status_code=200)
+def get_blog(id: int, response: Response, db: Session = Depends(get_db)):
     blog = db.query(model.Blog).filter(model.Blog.id == id).first()
+    if not blog:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Blog not found")   
     return blog

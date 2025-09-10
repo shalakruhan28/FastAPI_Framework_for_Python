@@ -30,4 +30,7 @@ def get_blogs(db: Session = Depends(get_db)):
     blogs = db.query(model.Blog).all()
     return blogs 
            
-
+@app.get("/blog/{id}")
+def get_blog(id: int, db: Session = Depends(get_db)):
+    blog = db.query(model.Blog).filter(model.Blog.id == id).first()
+    return blog

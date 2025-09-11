@@ -54,3 +54,12 @@ def update_blog(id: int, request: schemas.Blog, db: Session = Depends(get_db)):
     blog.update({'title': request.title, 'body': request.body, 'author': request.author})
     db.commit()
     return "updated"
+
+@app.post("/user")
+def creat_user(request: schemas.User, db:Session = Depends(get_db)): # type: ignore
+    new_user = model.User(name=request.name, email=request.email, password=request.password) # type: ignore
+    db.add(new_user)    
+    db.commit()
+    db.refresh(new_user)
+    return new_user
+    

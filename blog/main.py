@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session  # type: ignore
 from typing import List  # type: ignore
 from .hashing import Hash  # type: ignore
 
+
 app=FastAPI()
 
 model.Base.metadata.create_all(bind=engine)
@@ -57,7 +58,7 @@ def update_blog(id: int, request: schemas.Blog, db: Session = Depends(get_db)):
     db.commit()
     return "updated"
 
-@app.post("/user")
+@app.post("/user", response_model=schemas.ShowUser)
 def creat_user(request: schemas.User, db:Session = Depends(get_db)): # type: ignore
     
     

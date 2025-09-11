@@ -3,7 +3,7 @@ from . import schemas    # type: ignore
 from . import model # type: ignore 
 from .database import engine , Base , SessionLocal # type: ignore
 from sqlalchemy.orm import Session  # type: ignore
-
+from typing import List  # type: ignore
 app=FastAPI()
 
 model.Base.metadata.create_all(bind=engine)
@@ -25,7 +25,7 @@ def create_blog(request: schemas.Blog, db:Session = Depends(get_db)): # type: ig
     return new_blog
     
     
-@app.get("/blog")
+@app.get("/blog",response_model=list[schemas.ShowBlog], status_code=200)
 def get_blogs(db: Session = Depends(get_db)):
     blogs = db.query(model.Blog).all()
     return blogs 

@@ -67,4 +67,10 @@ def creat_user(request: schemas.User, db:Session = Depends(get_db)): # type: ign
     db.commit()
     db.refresh(new_user)
     return new_user
-    
+
+@app.get("/user/{id}",response_model=schemas.ShowUser, status_code=200)
+def get_users(id:int,db: Session = Depends(get_db)):
+    user = db.query(model.User).filter(model.User.id == id).first()
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"User {id} not found") 
+    return user     # pyright: ignore[reportUndefinedVariable]
